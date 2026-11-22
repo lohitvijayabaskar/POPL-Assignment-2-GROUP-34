@@ -79,3 +79,22 @@ clue(8, S) :-
 % counted at most once when this is used inside findall/3 or aggregate_all/3.
 satisfies(Active, S) :-
     forall(member(N, Active), clue(N, S)).
+
+% main
+% main succeeds after printing the first generated assignment that
+% satisfies clues 1 to 8, one line per friend, in the order Alex, Ben,
+% Carla, Dana. The cut keeps only the first solution, so exactly one
+% solution is printed.
+main :-
+    candidate(S),
+    satisfies([1, 2, 3, 4, 5, 6, 7, 8], S),
+    !,
+    print_solution(S).
+
+% print_solution(+S)
+% print_solution(S) prints each p(Name, Dept, Lang, Project) of S on its own
+% line as "Name = [Dept, Lang, Project]". ~w prints atoms without quotes,
+% so 'AI' appears as AI and 'c++' as c++.
+print_solution(S) :-
+    forall(member(p(Name, Dept, Lang, Project), S),
+           format("~w = [~w, ~w, ~w]~n", [Name, Dept, Lang, Project])).
