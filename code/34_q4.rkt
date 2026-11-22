@@ -52,3 +52,19 @@
          (n (read)))
     (display (insert-if-short x lst n))
     (newline)))
+
+;; (make-inserter x len-ok?): a one-argument function that puts x at the front of every list,
+;; at every level, whose original length satisfies len-ok?.
+;; Base: an atom element is kept as it is.
+;; Step: recurse into each sublist with my-map, then cons x in front when (len-ok? (my-length lst)).
+(define (make-inserter x len-ok?)
+  (letrec ((insert (lambda (lst)
+                     (let ((inner (my-map (lambda (e)
+                                            (if (list-value? e)
+                                                (insert e)
+                                                e))
+                                          lst)))
+                       (if (len-ok? (my-length lst))
+                           (cons x inner)
+                           inner)))))
+    insert))
