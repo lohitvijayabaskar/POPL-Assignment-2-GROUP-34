@@ -37,3 +37,12 @@
       (postorder-acc (tree-left tree)
                      (postorder-acc (tree-right tree)
                                     (cons (tree-value tree) acc)))))
+
+;; (height tree): height of tree.
+;; Base: () has height 0.
+;; Step: 1 plus the larger of the heights of the left and right subtrees.
+(define (height tree)
+  (if (null? tree)
+      0
+      (+ 1 (max (height (tree-left tree))
+                (height (tree-right tree))))))
