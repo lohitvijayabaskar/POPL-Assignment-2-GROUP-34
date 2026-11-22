@@ -15,3 +15,14 @@
       (inorder-acc (tree-left tree)
                    (cons (tree-value tree)
                          (inorder-acc (tree-right tree) acc)))))
+
+;; (preorder-acc tree acc): preorder values of tree consed in front of acc.
+;; Base: () adds nothing, so the result is acc.
+;; Step: the node, then preorder of the left subtree, then preorder of the right subtree,
+;; built right to left so each value is consed onto the accumulator.
+(define (preorder-acc tree acc)
+  (if (null? tree)
+      acc
+      (cons (tree-value tree)
+            (preorder-acc (tree-left tree)
+                          (preorder-acc (tree-right tree) acc)))))
