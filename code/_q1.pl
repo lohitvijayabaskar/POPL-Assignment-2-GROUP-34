@@ -73,6 +73,13 @@ clue(8, S) :-
     forall(member(p(_, Dept, Lang, data), S),
            ( Dept == research, Lang \== javascript )).
 
+% Clue 9 makes the puzzle have exactly one solution. It names no friend,
+% and uses forall/2 like the other "the friend who ..." clues.
+% CLUE 9: The friend whose favorite language is Python prefers the AI project.
+clue(9, S) :-
+    forall(member(p(_, _, python, Project), S),
+           Project == 'AI').
+
 % satisfies(+Active, +S)
 % satisfies(Active, S) holds when clue(N, S) holds for every clue number N
 % in the list Active. An empty Active list is satisfied by every S.
