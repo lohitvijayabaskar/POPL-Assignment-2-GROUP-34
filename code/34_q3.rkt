@@ -62,3 +62,14 @@
 (define (print-inorder tree)
   (display (inorder-acc tree '()))
   (newline))
+
+;; (print-all-traversals tree): display the inorder, preorder and postorder lists, one per line.
+;; Base: () prints "()" three times, since every traversal of () is empty.
+;; Step: build each list with its accumulator function and an empty accumulator.
+(define (print-all-traversals tree)
+  (display (inorder-acc tree '()))
+  (newline)
+  (display (preorder-acc tree '()))
+  (newline)
+  (display (postorder-acc tree '()))
+  (newline))
