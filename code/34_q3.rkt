@@ -46,3 +46,12 @@
       0
       (+ 1 (max (height (tree-left tree))
                 (height (tree-right tree))))))
+
+;; (leaf-count tree): number of leaves in tree.
+;; Base: () has no leaves; a node whose subtrees are both () is one leaf.
+;; Step: otherwise the sum of the leaf counts of the left and right subtrees.
+(define (leaf-count tree)
+  (cond ((null? tree) 0)
+        ((and (null? (tree-left tree)) (null? (tree-right tree))) 1)
+        (else (+ (leaf-count (tree-left tree))
+                 (leaf-count (tree-right tree))))))
