@@ -55,3 +55,10 @@
         ((and (null? (tree-left tree)) (null? (tree-right tree))) 1)
         (else (+ (leaf-count (tree-left tree))
                  (leaf-count (tree-right tree))))))
+
+;; (print-inorder tree): display the inorder list of tree on one line.
+;; Base: () prints "()", since its inorder list is empty.
+;; Step: build the inorder list with inorder-acc and an empty accumulator, then end the line.
+(define (print-inorder tree)
+  (display (inorder-acc tree '()))
+  (newline))
