@@ -26,3 +26,14 @@
       (cons (tree-value tree)
             (preorder-acc (tree-left tree)
                           (preorder-acc (tree-right tree) acc)))))
+
+;; (postorder-acc tree acc): postorder values of tree consed in front of acc.
+;; Base: () adds nothing, so the result is acc.
+;; Step: postorder of the left subtree, then the right subtree, then the node,
+;; built right to left so each value is consed onto the accumulator.
+(define (postorder-acc tree acc)
+  (if (null? tree)
+      acc
+      (postorder-acc (tree-left tree)
+                     (postorder-acc (tree-right tree)
+                                    (cons (tree-value tree) acc)))))
