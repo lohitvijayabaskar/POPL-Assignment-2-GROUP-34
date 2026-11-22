@@ -4,6 +4,7 @@
 % in the order 'Alex', 'Ben', 'Carla', 'Dana'.
 
 :- use_module(library(lists)).
+:- use_module(library(aggregate)).
 
 % candidate(-S)
 % candidate(S) holds when S is a filled-in assignment for the four friends
@@ -79,6 +80,13 @@ clue(8, S) :-
 % counted at most once when this is used inside findall/3 or aggregate_all/3.
 satisfies(Active, S) :-
     forall(member(N, Active), clue(N, S)).
+
+% count_solutions(+Active, -N)
+% count_solutions(Active, N) holds when N is the number of candidate
+% assignments that satisfy every clue number in Active. Clues not in Active
+% are ignored. satisfies/2 is deterministic, so each candidate counts once.
+count_solutions(Active, N) :-
+    aggregate_all(count, (candidate(S), satisfies(Active, S)), N).
 
 % main
 % main succeeds after printing the first generated assignment that
