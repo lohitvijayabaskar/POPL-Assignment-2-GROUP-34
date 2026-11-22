@@ -42,3 +42,13 @@
     (if (< (my-length lst) n)
         (cons x inner)
         inner)))
+
+;; (print-insert-result): read x, lst and n from standard input, display the result of
+;; insert-if-short followed by a newline.
+;; No recursion: read the three values in order, then print one result.
+(define (print-insert-result)
+  (let* ((x (read))
+         (lst (read))
+         (n (read)))
+    (display (insert-if-short x lst n))
+    (newline)))
