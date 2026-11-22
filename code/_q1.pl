@@ -71,3 +71,11 @@ clue(7, S) :-
 clue(8, S) :-
     forall(member(p(_, Dept, Lang, data), S),
            ( Dept == research, Lang \== javascript )).
+
+% satisfies(+Active, +S)
+% satisfies(Active, S) holds when clue(N, S) holds for every clue number N
+% in the list Active. An empty Active list is satisfied by every S.
+% forall/2 succeeds at most once and leaves no choice points, so S is
+% counted at most once when this is used inside findall/3 or aggregate_all/3.
+satisfies(Active, S) :-
+    forall(member(N, Active), clue(N, S)).
