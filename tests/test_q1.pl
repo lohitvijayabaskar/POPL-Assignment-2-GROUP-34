@@ -1,4 +1,4 @@
-% Tests for P1 (code/_q1.pl).
+% Tests for P1 (code/34_q1.pl).
 % Run from the repository root:
 %   swipl -q -f tests/test_q1.pl -g run_tests -t halt
 
@@ -8,7 +8,7 @@
 
 % Load the solution file relative to this test file.
 :- prolog_load_context(directory, Dir),
-   atom_concat(Dir, '/../code/_q1.pl', File),
+   atom_concat(Dir, '/../code/34_q1.pl', File),
    consult(File).
 
 % main_lines(-Lines)

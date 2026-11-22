@@ -1,4 +1,4 @@
 ﻿# CS F301 PPL Assignment 2
 
-Group: <GROUP-ID>
+Group: 34
 Members: <names and IDs>
