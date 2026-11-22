@@ -73,3 +73,10 @@
   (newline)
   (display (postorder-acc tree '()))
   (newline))
+
+;; (print-height-and-leaves tree): display the list (height leaf-count) on one line.
+;; Base: () prints "(0 0)".
+;; Step: combine the results of height and leaf-count into a two-element list.
+(define (print-height-and-leaves tree)
+  (display (list (height tree) (leaf-count tree)))
+  (newline))
