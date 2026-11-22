@@ -80,3 +80,18 @@ op_prec(+, 1).
 op_prec(-, 1).
 op_prec(*, 2).
 op_prec(/, 2).
+
+% generate_equation(+List, -Equation)
+% generate_equation(List, Equation) holds when Equation is a string "L=R"
+% where L is an expression over a non-empty prefix of List and R is an
+% expression over the remaining non-empty suffix, both evaluating to the
+% same integer value, formatted with to_string/2.
+generate_equation(List, Equation) :-
+    append([L|Ls], [R|Rs], List),
+    findall(r(RTree, Val), expr([R|Rs], RTree, Val), Rights),
+    Rights \== [],
+    expr([L|Ls], LTree, Val),
+    member(r(RTree, Val), Rights),
+    to_string(LTree, LStr),
+    to_string(RTree, RStr),
+    format(string(Equation), "~w=~w", [LStr, RStr]).
