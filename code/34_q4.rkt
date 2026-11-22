@@ -23,3 +23,22 @@
     (if (null? l)
         (my-reverse acc)
         (loop (cdr l) (cons (f (car l)) acc)))))
+
+;; (list-value? v): true when v is a list, including (), false for an atom.
+(define (list-value? v)
+  (or (null? v) (pair? v)))
+
+;; (insert-if-short x lst n): lst with x put at the front of every list, at every level,
+;; whose original length is less than n.
+;; Base: an atom element is kept as it is.
+;; Step: recurse into each sublist with my-map, then cons x in front when (my-length lst) < n.
+;; The length is taken from the original lst, before any insertion.
+(define (insert-if-short x lst n)
+  (let ((inner (my-map (lambda (e)
+                         (if (list-value? e)
+                             (insert-if-short x e n)
+                             e))
+                       lst)))
+    (if (< (my-length lst) n)
+        (cons x inner)
+        inner)))
