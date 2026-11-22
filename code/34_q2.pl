@@ -103,3 +103,11 @@ generate_equation(List, Equation) :-
 all_equations(List, Equations) :-
     findall(Eq, generate_equation(List, Eq), Raw),
     sort(Raw, Equations).
+
+% count_equations(+List, -N)
+% count_equations(List, N) holds when N is the number of unique valid
+% equations that can be formed from List, equal to the length of the list
+% produced by all_equations(List, Equations).
+count_equations(List, N) :-
+    all_equations(List, Equations),
+    length(Equations, N).
