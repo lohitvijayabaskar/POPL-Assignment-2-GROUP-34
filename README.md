@@ -17,6 +17,7 @@ Aryaman Srivastava (2023B5A70764H)
 ## Run
 ```
 swipl -q -f code/34_q1.pl -g main -t halt
+swipl -q -f code/34_q2.pl -g "all_equations([4,2,5,3], Es), writeln(Es)" -t halt
 racket code/34_q3.rkt
 ```
 
