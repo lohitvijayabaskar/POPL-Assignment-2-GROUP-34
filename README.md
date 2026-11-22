@@ -19,7 +19,11 @@ Aryaman Srivastava (2023B5A70764H)
 swipl -q -f code/34_q1.pl -g main -t halt
 swipl -q -f code/34_q2.pl -g "all_equations([4,2,5,3], Es), writeln(Es)" -t halt
 racket code/34_q3.rkt
+racket code/34_q4.rkt
 ```
+The Racket files contain only definitions, so running them on their own prints nothing; the
+grader appends its own calls (for example `(print-inorder t1)` or `(print-insert-result)`) to
+the end of each file.
 
 ## Tests
 ```
