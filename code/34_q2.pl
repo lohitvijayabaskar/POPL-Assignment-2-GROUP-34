@@ -95,3 +95,11 @@ generate_equation(List, Equation) :-
     to_string(LTree, LStr),
     to_string(RTree, RStr),
     format(string(Equation), "~w=~w", [LStr, RStr]).
+
+% all_equations(+List, -Equations)
+% all_equations(List, Equations) holds when Equations is the list of all
+% unique valid equations for List, sorted in standard order via sort/2,
+% or [] if no valid equations exist.
+all_equations(List, Equations) :-
+    findall(Eq, generate_equation(List, Eq), Raw),
+    sort(Raw, Equations).
