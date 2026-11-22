@@ -28,21 +28,6 @@
 (define (list-value? v)
   (or (null? v) (pair? v)))
 
-;; (insert-if-short x lst n): lst with x put at the front of every list, at every level,
-;; whose original length is less than n.
-;; Base: an atom element is kept as it is.
-;; Step: recurse into each sublist with my-map, then cons x in front when (my-length lst) < n.
-;; The length is taken from the original lst, before any insertion.
-(define (insert-if-short x lst n)
-  (let ((inner (my-map (lambda (e)
-                         (if (list-value? e)
-                             (insert-if-short x e n)
-                             e))
-                       lst)))
-    (if (< (my-length lst) n)
-        (cons x inner)
-        inner)))
-
 ;; (print-insert-result): read x, lst and n from standard input, display the result of
 ;; insert-if-short followed by a newline.
 ;; No recursion: read the three values in order, then print one result.
@@ -68,3 +53,9 @@
                            (cons x inner)
                            inner)))))
     insert))
+
+;; (insert-if-short x lst n): lst with x put at the front of every list, at every level,
+;; whose original length is less than n.
+;; Base and step come from make-inserter, called with the predicate "length is less than n".
+(define (insert-if-short x lst n)
+  ((make-inserter x (lambda (len) (< len n))) lst))
