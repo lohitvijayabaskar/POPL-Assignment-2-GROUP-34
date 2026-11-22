@@ -28,3 +28,55 @@ eval_op(LTree, LVal, RTree, RVal, LTree / RTree, Value) :-
     RVal =\= 0,
     LVal mod RVal =:= 0,
     Value is LVal // RVal.
+
+% to_string(+Tree, -String)
+% to_string(Tree, String) holds when String is the canonical SWI-Prolog string
+% representation of the arithmetic expression tree Tree with no spaces.
+to_string(Tree, String) :-
+    number(Tree),
+    !,
+    number_string(Tree, String).
+to_string(Tree, String) :-
+    Tree =.. [Op, Left, Right],
+    op_prec(Op, Prec),
+    left_to_string(Left, Prec, LStr),
+    right_to_string(Right, Prec, RStr),
+    format(string(String), "~w~w~w", [LStr, Op, RStr]).
+
+% left_to_string(+Tree, +ParentPrec, -String)
+% left_to_string(Tree, ParentPrec, String) converts the left child Tree to a
+% string, enclosing it in parentheses only if Tree is a compound expression
+% whose top operator has strictly lower precedence than ParentPrec.
+left_to_string(Tree, ParentPrec, String) :-
+    compound(Tree),
+    Tree =.. [Op, _, _],
+    op_prec(Op, Prec),
+    Prec < ParentPrec,
+    !,
+    to_string(Tree, Inner),
+    format(string(String), "(~w)", [Inner]).
+left_to_string(Tree, _ParentPrec, String) :-
+    to_string(Tree, String).
+
+% right_to_string(+Tree, +ParentPrec, -String)
+% right_to_string(Tree, ParentPrec, String) converts the right child Tree to a
+% string, enclosing it in parentheses if Tree is a compound expression whose
+% top operator has equal or lower precedence than ParentPrec.
+right_to_string(Tree, ParentPrec, String) :-
+    compound(Tree),
+    Tree =.. [Op, _, _],
+    op_prec(Op, Prec),
+    Prec =< ParentPrec,
+    !,
+    to_string(Tree, Inner),
+    format(string(String), "(~w)", [Inner]).
+right_to_string(Tree, _ParentPrec, String) :-
+    to_string(Tree, String).
+
+% op_prec(+Op, -Prec)
+% op_prec(Op, Prec) defines the operator precedence: * and / bind tighter (2)
+% than + and - (1).
+op_prec(+, 1).
+op_prec(-, 1).
+op_prec(*, 2).
+op_prec(/, 2).
